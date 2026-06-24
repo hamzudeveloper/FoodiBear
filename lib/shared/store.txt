@@ -1,0 +1,166 @@
+import 'package:flutter/material.dart';
+import 'package:foodi_bear/Core/Constants/app_colors.dart';
+
+class CustomBottomNavbar extends StatelessWidget {
+  // final int currentIndex;
+  // final Function(int) onTap;
+
+  const CustomBottomNavbar({
+    super.key,
+    // required this.currentIndex,
+    // required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    int currentPage = 0;
+    final navItems = [
+      {"icon": Icons.explore_outlined, "title": "Explore"},
+
+      {"icon": Icons.search, "title": "Search"},
+
+      {"icon": Icons.restaurant, "title": "Orders"},
+
+      {"icon": Icons.wallet_outlined, "title": "Wallet"},
+
+      {"icon": Icons.person_outline, "title": "Profile"},
+    ];
+
+    return Container(
+      margin: const EdgeInsets.all(12),
+
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+
+      decoration: BoxDecoration(
+        color: AppColors.card,
+
+        borderRadius: BorderRadius.circular(25),
+
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.25),
+
+            blurRadius: 15,
+
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+        children: [
+          Column(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.explore, color: AppColors.borderPrimary),
+              ),
+              Text("Explore", style: TextStyle(color: AppColors.borderPrimary)),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.explore, color: AppColors.borderPrimary),
+              ),
+              Text("Explore", style: TextStyle(color: AppColors.borderPrimary)),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.explore, color: AppColors.borderPrimary),
+              ),
+              Text("Explore", style: TextStyle(color: AppColors.borderPrimary)),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.explore, color: AppColors.borderPrimary),
+              ),
+              Text("Explore", style: TextStyle(color: AppColors.borderPrimary)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class BottomNavbarPage extends StatefulWidget {
+  const BottomNavbarPage({super.key});
+
+  @override
+  State<BottomNavbarPage> createState() => _BottomNavbarPageState();
+}
+
+class _BottomNavbarPageState extends State<BottomNavbarPage> {
+  int selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    Center(child: Text('Home')),
+    Center(child: Text('Search')),
+    Center(child: Text('Cart')),
+    Center(child: Text('Profile')),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[selectedIndex],
+      backgroundColor: Colors.blue[100],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey[900],
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.grey[500],
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        currentIndex: selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.cart),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
+  }
+}
