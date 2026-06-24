@@ -92,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        _showForgotPasswordBottomSheet(context);
+                        _showForgotPasswordDialog(context);
                       },
                       child: Text(
                         "Forgot Password?",
