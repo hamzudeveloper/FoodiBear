@@ -148,6 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 AppSizes.h16,
                 RecommendedCard(),
+
+                // below this is just for testing
+                Text('nothing'),
               ],
             ),
           ),
