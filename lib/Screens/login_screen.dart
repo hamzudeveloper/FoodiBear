@@ -81,7 +81,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-
                 //Password Input Field
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,8 +89,8 @@ class LoginScreen extends StatelessWidget {
                       "Password",
                       style: TextStyle(color: AppColors.heading),
                     ),
-                    TextButton(
-                      onPressed: () {
+                    InkWell(
+                      onTap: () {
                         _showForgotPasswordDialog(context);
                       },
                       child: Text(
@@ -150,18 +149,22 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 30),
+                dividerWithText("OR"),
                 Text(
-                  "----------------------- OR CONTINUE WITH -----------------------",
+                  "Continue with",
                   style: TextStyle(
                     color: const Color.fromARGB(255, 102, 103, 105),
                   ),
                 ),
                 SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      width: 150,
-                      height: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 35,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.card,
                         borderRadius: BorderRadius.circular(10),
@@ -170,16 +173,16 @@ class LoginScreen extends StatelessWidget {
                       child: Icon(Icons.facebook, color: Colors.blue, size: 50),
                     ),
                     Container(
-                      width: 150,
-                      height: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 35,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.card,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: AppColors.glassBorder),
                       ),
-                      child: Image.network(
-                        "https://w7.pngwing.com/pngs/338/520/png-transparent-g-suite-google-play-google-logo-google-text-logo-cloud-computing.png",
-                      ),
+                      child: Icon(Icons.apple_outlined, size: 50),
                     ),
                   ],
                 ),
@@ -213,6 +216,22 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget dividerWithText(String text) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Row(
+      children: [
+        Expanded(child: Divider(color: Colors.grey.shade400, thickness: 1)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Text(text, style: TextStyle(color: Colors.grey.shade600)),
+        ),
+        Expanded(child: Divider(color: Colors.grey.shade400, thickness: 1)),
+      ],
+    ),
+  );
 }
 
 void _showForgotPasswordBottomSheet(BuildContext context) {

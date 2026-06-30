@@ -32,7 +32,7 @@ class HomeBanner extends StatelessWidget {
 
       options: CarouselOptions(
         height: 190,
-        autoPlay: false,
+        autoPlay: true,
         enlargeCenterPage: true,
         viewportFraction: 1,
       ),

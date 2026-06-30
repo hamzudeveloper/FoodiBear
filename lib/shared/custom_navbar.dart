@@ -4,6 +4,7 @@ import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Screens/cart_screen.dart';
 import 'package:foodi_bear/Screens/home_screen.dart';
 import 'package:foodi_bear/Screens/search.dart';
+import 'package:foodi_bear/Screens/settings_screen.dart';
 
 class BottomNavbarPage extends StatefulWidget {
   const BottomNavbarPage({super.key});
@@ -19,7 +20,7 @@ class _BottomNavbarPageState extends State<BottomNavbarPage> {
     HomeScreen(),
     ExploreSearchScreen(),
     CartScreen(),
-    Center(child: Text('Profile')),
+    SettingsScreen(),
   ];
 
   @override
@@ -28,9 +29,7 @@ class _BottomNavbarPageState extends State<BottomNavbarPage> {
       body: _pages[selectedIndex],
       backgroundColor: Colors.blue[100],
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
         child: BottomNavigationBar(
           backgroundColor: AppColors.card,
           selectedItemColor: AppColors.borderPrimary,
@@ -51,8 +50,8 @@ class _BottomNavbarPageState extends State<BottomNavbarPage> {
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: 'Profile',
+              icon: Icon(Icons.settings_outlined),
+              label: 'Settings',
             ),
           ],
         ),

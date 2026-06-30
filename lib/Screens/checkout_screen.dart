@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  int _selectedPaymentIndex = 1;
+  bool selected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +24,9 @@ class CheckoutScreen extends StatelessWidget {
             Icons.arrow_back,
             color: Color(0xFFFFB088),
           ), // Peach/coral back arrow
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text(
           'Checkout',
@@ -28,16 +38,12 @@ class CheckoutScreen extends StatelessWidget {
         centerTitle: true,
       ),
       // Scaffold body uses a Stack so we can overlay the bottom button perfectly
-      body: Stack(
-        children: [
-          // 1. Scrollable Content Area
-          ListView(
-            padding: const EdgeInsets.only(
-              left: 16.0,
-              right: 16.0,
-              top: 16.0,
-              bottom: 100.0,
-            ), // Extra bottom padding so content doesn't get hidden behind the button
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // Extra bottom padding so content doesn't get hidden behind the button
             children: [
               _buildSectionTitle('Order Summary'),
               _buildOrderSummaryCard(),
@@ -63,15 +69,7 @@ class CheckoutScreen extends StatelessWidget {
               _buildPriceBreakdown(),
             ],
           ),
-
-          // 2. Fixed Bottom Place Order Button
-          Positioned(
-            bottom: 20,
-            left: 16,
-            right: 16,
-            child: _buildPlaceOrderButton(),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -165,98 +163,119 @@ class CheckoutScreen extends StatelessWidget {
       children: [
         // Standard Delivery Card
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF161F30),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.transparent, width: 1.5),
-            ),
-            child: Column(
-              children: [
-                const Icon(Icons.shuffle, color: Colors.white70),
-                const SizedBox(height: 8),
-                const Text(
-                  'Standard',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.white,
-                  ),
-                ),
-                const Text(
-                  '30-45 mins',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black38,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'FREE',
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                selected = !selected; // Mark Standard as selected
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF161F30),
+                borderRadius: BorderRadius.circular(20),
+                border: selected
+                    ? Border.all(
+                        color: const Color(0xFFFFB088).withValues(alpha: 0.3),
+                        width: 1.5,
+                      )
+                    : null, // Highlight border if selected
+              ),
+              child: Column(
+                children: [
+                  const Icon(Icons.shuffle, color: Colors.white70),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Standard',
                     style: TextStyle(
-                      color: AppColors.grey,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.white,
                     ),
                   ),
-                ),
-              ],
+                  const Text(
+                    '30-45 mins',
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      'FREE',
+                      style: TextStyle(
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         const SizedBox(width: 16),
         // Express Delivery Card (Selected state highlighted)
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF161F30),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: const Color(0xFFFFB088).withValues(alpha: 0.3),
-                width: 1.5,
-              ), // Highlight border
-            ),
-            child: Column(
-              children: [
-                const Icon(Icons.rocket_launch, color: Color(0xFFFFB088)),
-                const SizedBox(height: 8),
-                const Text(
-                  'Express',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Text(
-                  '15-20 mins',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE65100),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    '+ \$5.00',
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                selected = !selected; // Mark Express as selected
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF161F30),
+                borderRadius: BorderRadius.circular(20),
+                border: selected
+                    ? Border.all(
+                        color: const Color(0xFFFFB088).withValues(alpha: 0.3),
+                        width: 1.5,
+                      )
+                    : null, // Highlight border if selected
+              ),
+              child: Column(
+                children: [
+                  const Icon(Icons.rocket_launch, color: Color(0xFFFFB088)),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Express',
                     style: TextStyle(
-                      fontSize: 12,
+                      color: AppColors.white,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
                     ),
                   ),
-                ),
-              ],
+                  const Text(
+                    '15-20 mins',
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE65100),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      '+ \$5.00',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -275,31 +294,34 @@ class CheckoutScreen extends StatelessWidget {
       child: Column(
         children: [
           _buildPaymentRow(
+            0,
             Icons.apps,
             'Apple Pay',
             'Instant Secure Checkout',
-            false,
+            // isSelected,
           ),
           const Divider(color: Colors.white10, height: 24),
           _buildPaymentRow(
+            1,
             Icons.wallet,
             'Bear Wallet',
             'Balance: \$124.50',
-            true,
+            // isSelected,
           ), // Selected
           const Divider(color: Colors.white10, height: 24),
-          _buildPaymentRow(Icons.credit_card, 'Mastercard', '•••• 8821', false),
+          _buildPaymentRow(2, Icons.credit_card, 'Mastercard', '•••• 8821'),
         ],
       ),
     );
   }
 
   Widget _buildPaymentRow(
+    int index,
     IconData icon,
     String title,
     String subtitle,
-    bool isSelected,
   ) {
+    bool isSelected = _selectedPaymentIndex == index;
     return Row(
       children: [
         Container(
@@ -334,28 +356,35 @@ class CheckoutScreen extends StatelessWidget {
           ),
         ),
         // Custom Radio Indicator
-        Container(
-          width: 20,
-          height: 20,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: isSelected ? const Color(0xFFFFB088) : Colors.grey,
-              width: 2,
+        InkWell(
+          onTap: () {
+            setState(() {
+              _selectedPaymentIndex = index; // Toggle selection state
+            });
+          },
+          child: Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isSelected ? const Color(0xFFFFB088) : Colors.grey,
+                width: 2,
+              ),
             ),
-          ),
-          child: isSelected
-              ? Center(
-                  child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFFFB088),
+            child: isSelected
+                ? Center(
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFFFFB088),
+                      ),
                     ),
-                  ),
-                )
-              : null,
+                  )
+                : null,
+          ),
         ),
       ],
     );

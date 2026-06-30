@@ -9,8 +9,9 @@ class FoodCategory extends StatelessWidget {
       {"title": "Burger", "icon": Icons.lunch_dining},
       {"title": "Pizza", "icon": Icons.local_pizza},
       {"title": "Asian", "icon": Icons.ramen_dining},
-      // {"title": "Drinks", "icon": Icons.local_drink},
-      // {"title": "Desserts", "icon": Icons.icecream},
+      {"title": "Drinks", "icon": Icons.local_drink},
+      {"title": "Desserts", "icon": Icons.icecream},
+      {"title": "Salads", "icon": Icons.eco},
     ];
 
     return GridView.builder(

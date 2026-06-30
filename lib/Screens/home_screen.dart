@@ -138,13 +138,72 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 AppSizes.h16,
 
-                FoodCategory(),
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CategoryCard(
+                          title: "Pizza",
+                          icon: Icons.local_pizza,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: CategoryCard(
+                          title: "Burgers",
+                          icon: Icons.fastfood,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AppSizes.h20,
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CategoryCard(
+                          title: "Pizza",
+                          icon: Icons.local_pizza,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: CategoryCard(
+                          title: "Burgers",
+                          icon: Icons.fastfood,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: CategoryCard(
+                          title: "Burgers",
+                          icon: Icons.fastfood,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 AppSizes.h16,
 
-                Text(
-                  "Recommended For You",
-                  style: TextStyle(color: AppColors.white, fontSize: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Recommended For You",
+                      style: TextStyle(color: AppColors.white, fontSize: 24),
+                    ),
+
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+                    ),
+                  ],
                 ),
                 AppSizes.h16,
                 RecommendedCard(),

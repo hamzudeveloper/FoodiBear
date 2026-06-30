@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
+import 'package:foodi_bear/Screens/detailProduct_screen.dart';
 
 class RecommendedCard extends StatefulWidget {
   const RecommendedCard({super.key});
@@ -9,7 +10,7 @@ class RecommendedCard extends StatefulWidget {
 }
 
 class _RecommendedCardState extends State<RecommendedCard> {
-  final food = [
+  static final food = [
     {
       "Title": "Truffle Cream Pasta",
       "Price": "\$18.50",
@@ -63,11 +64,19 @@ class _RecommendedCardState extends State<RecommendedCard> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
 
-              child: Image.asset(
-                item["Image"]!,
-                height: 110,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FoodDetailScreen()),
+                  );
+                },
+                child: Image.asset(
+                  item["Image"]!,
+                  height: 110,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
 
