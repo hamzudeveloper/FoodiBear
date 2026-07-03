@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Core/Constants/app_sizes.dart';
+import 'package:foodi_bear/Screens/notification_screen.dart';
 import 'package:foodi_bear/shared/cuisines_cards.dart';
 import 'package:foodi_bear/shared/custom_navbar.dart';
 import 'package:foodi_bear/shared/home_banner.dart';
@@ -17,6 +18,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController searchController = TextEditingController();
+  String searchText = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.notifications_outlined, color: AppColors.heading),
+              IconButton(
+                icon: Icon(Icons.notifications_outlined),
+                color: AppColors.heading,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotificationScreen(),
+                    ),
+                  );
+                },
+              ),
               SizedBox(width: 10),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -67,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               children: [
                 Text(
-                  "Hello Hamzu 👋",
+                  "Hello Hamzu",
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
@@ -145,15 +160,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(
                         child: CategoryCard(
-                          title: "Pizza",
-                          icon: Icons.local_pizza,
+                          title: "Deals",
+                          image: "assets/deal1.png",
                         ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
                         child: CategoryCard(
-                          title: "Burgers",
-                          icon: Icons.fastfood,
+                          title: "hotdog",
+                          image: "assets/hot_dog.png",
                         ),
                       ),
                     ],
@@ -167,22 +182,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(
                         child: CategoryCard(
-                          title: "Pizza",
-                          icon: Icons.local_pizza,
+                          title: "Chicken Pieces",
+                          image: "assets/piece.png",
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: CategoryCard(
+                          title: "Hot Wings",
+                          image: "assets/wings.png",
                         ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
                         child: CategoryCard(
                           title: "Burgers",
-                          icon: Icons.fastfood,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: CategoryCard(
-                          title: "Burgers",
-                          icon: Icons.fastfood,
+                          image: "assets/burger.png",
                         ),
                       ),
                     ],

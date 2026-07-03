@@ -6,12 +6,12 @@ class FoodCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      {"title": "Burger", "icon": Icons.lunch_dining},
-      {"title": "Pizza", "icon": Icons.local_pizza},
-      {"title": "Asian", "icon": Icons.ramen_dining},
-      {"title": "Drinks", "icon": Icons.local_drink},
-      {"title": "Desserts", "icon": Icons.icecream},
-      {"title": "Salads", "icon": Icons.eco},
+      {"title": "Burger", "image": "assets/burger.png"},
+      {"title": "Pizza", "image": "assets/pizza.png"},
+      {"title": "Asian", "image": "assets/asian.png"},
+      {"title": "Drinks", "image": "assets/drinks.png"},
+      {"title": "Desserts", "image": "assets/desserts.png"},
+      {"title": "Salads", "image": "assets/salads.png"},
     ];
 
     return GridView.builder(
@@ -27,7 +27,7 @@ class FoodCategory extends StatelessWidget {
       itemBuilder: (context, index) {
         return CategoryCard(
           title: categories[index]["title"] as String,
-          icon: categories[index]["icon"] as IconData,
+          image: categories[index]["image"] as String,
         );
       },
     );
@@ -36,9 +36,9 @@ class FoodCategory extends StatelessWidget {
 
 class CategoryCard extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final String image;
 
-  const CategoryCard({super.key, required this.title, required this.icon});
+  const CategoryCard({super.key, required this.title, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class CategoryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Color(0xffff9b71), size: 28),
+          Image.asset(image, width: 45, height: 45, fit: BoxFit.cover),
 
           Spacer(),
 

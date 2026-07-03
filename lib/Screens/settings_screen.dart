@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/shared/acount_setting.dart';
+import 'package:foodi_bear/shared/app_settings.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -38,12 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
-            AccountSetting(),
-            Center(child: Text('App Settings Page')),
-          ],
-        ),
+        body: const TabBarView(children: [AccountSetting(), AppSettings()]),
       ),
     );
   }

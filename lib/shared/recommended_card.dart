@@ -14,17 +14,17 @@ class _RecommendedCardState extends State<RecommendedCard> {
     {
       "Title": "Truffle Cream Pasta",
       "Price": "\$18.50",
-      "Image": "assets/burger.png",
+      "Image": "assets/truffleCream.png",
     },
     {
       "Title": "Berry Blast Bowl",
       "Price": "\$12.99",
-      "Image": "assets/burger.png",
+      "Image": "assets/berryBlast.png",
     },
     {
       "Title": "Spicy Tuna Poke",
       "Price": "\$16.20",
-      "Image": "assets/burger.png",
+      "Image": "assets/tunapoke.png",
     },
   ];
 
@@ -47,6 +47,7 @@ class _RecommendedCardState extends State<RecommendedCard> {
   Widget buildCard(Map<String, String> item) {
     return Container(
       width: 140,
+      height: 150,
       margin: EdgeInsets.only(right: 12),
 
       decoration: BoxDecoration(
@@ -71,11 +72,13 @@ class _RecommendedCardState extends State<RecommendedCard> {
                     MaterialPageRoute(builder: (context) => FoodDetailScreen()),
                   );
                 },
-                child: Image.asset(
-                  item["Image"]!,
-                  height: 110,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+                child: Container(
+                  width: 140,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Image.asset(item["Image"]!, fit: BoxFit.contain),
                 ),
               ),
             ),

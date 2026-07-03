@@ -26,10 +26,9 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //App Logo....
-                Image.asset(
-                  "assets/foodi_bear_logo.png",
-                  width: 200,
-                  height: 200,
+                CircleAvatar(
+                  radius: 100,
+                  backgroundImage: AssetImage("assets/foodi_bear_logo.png"),
                 ),
                 SizedBox(height: 60),
 

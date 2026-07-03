@@ -13,7 +13,12 @@ class HomeBanner extends StatelessWidget {
       {
         "title": "40 % OFF",
         "subtitle": "On your First order",
-        "image": "assets/burger.png",
+        "image": "assets/deal.png",
+      },
+      {
+        "title": "40 % OFF",
+        "subtitle": "On your First order",
+        "image": "assets/deal.png",
       },
       {
         "title": "40 % OFF",
@@ -23,7 +28,7 @@ class HomeBanner extends StatelessWidget {
       {
         "title": "40 % OFF",
         "subtitle": "On your First order",
-        "image": "assets/burger.png",
+        "image": "assets/deal1.png",
       },
     ];
 

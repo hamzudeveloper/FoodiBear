@@ -93,7 +93,7 @@ class AccountSetting extends StatelessWidget {
                 children: [
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: ListTile(
                       leading: Container(
                         padding: const EdgeInsets.all(4),
@@ -102,12 +102,12 @@ class AccountSetting extends StatelessWidget {
                           color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                         ),
                         child: Icon(
-                          Icons.lock_outlined,
+                          Icons.person_outline_sharp,
                           color: AppColors.primary,
                         ),
                       ),
                       title: Text(
-                        'Change Password',
+                        'Personal Information',
                         style: TextStyle(color: const Color(0xFF83ACB6)),
                       ),
                       trailing: Icon(
@@ -119,7 +119,7 @@ class AccountSetting extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: ListTile(
                       leading: Container(
                         padding: const EdgeInsets.all(4),
@@ -128,12 +128,12 @@ class AccountSetting extends StatelessWidget {
                           color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                         ),
                         child: Icon(
-                          Icons.email_outlined,
+                          Icons.location_on_outlined,
                           color: const Color(0xFFFF6B35),
                         ),
                       ),
                       title: Text(
-                        'Change Email Address',
+                        'Saved Addresses',
                         style: TextStyle(color: const Color(0xFF83ACB6)),
                       ),
                       trailing: Icon(
@@ -145,7 +145,7 @@ class AccountSetting extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: ListTile(
                       leading: Container(
                         padding: const EdgeInsets.all(4),
@@ -154,12 +154,38 @@ class AccountSetting extends StatelessWidget {
                           color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                         ),
                         child: Icon(
-                          Icons.phone_outlined,
+                          Icons.payment,
                           color: const Color(0xFFFF6B35),
                         ),
                       ),
                       title: Text(
-                        'Change Phone Number',
+                        'Payment Methods',
+                        style: TextStyle(color: const Color(0xFF83ACB6)),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: AppColors.primary,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListTile(
+                      leading: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
+                        ),
+                        child: Icon(
+                          Icons.account_balance_wallet_outlined,
+                          color: const Color(0xFFFF6B35),
+                        ),
+                      ),
+                      title: Text(
+                        'Bear Wallet Settings',
                         style: TextStyle(color: const Color(0xFF83ACB6)),
                       ),
                       trailing: Icon(
@@ -172,6 +198,31 @@ class AccountSetting extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Foodi Bear version 1.0.0",
+              style: TextStyle(color: const Color(0xFF5E4C46), fontSize: 16),
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Terms of Service",
+                  style: TextStyle(color: AppColors.primary),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "Privacy Policy",
+                  style: TextStyle(color: AppColors.primary),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              "© 2023 Foodi Bear. All rights reserved.",
+              style: TextStyle(color: const Color(0xFF5E4C46), fontSize: 14),
             ),
           ],
         ),
