@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Screens/detailProduct_screen.dart';
+import 'package:foodi_bear/shared/card_data.dart';
 
 class RecommendedCard extends StatefulWidget {
   const RecommendedCard({super.key});
@@ -14,17 +15,17 @@ class _RecommendedCardState extends State<RecommendedCard> {
     {
       "Title": "Truffle Cream Pasta",
       "Price": "\$18.50",
-      "Image": "assets/truffleCream.png",
+      "Image": "assets/pizza.png",
     },
     {
       "Title": "Berry Blast Bowl",
       "Price": "\$12.99",
-      "Image": "assets/berryBlast.png",
+      "Image": "assets/deal1.png",
     },
     {
       "Title": "Spicy Tuna Poke",
       "Price": "\$16.20",
-      "Image": "assets/tunapoke.png",
+      "Image": "assets/burger.png",
     },
   ];
 
@@ -69,7 +70,13 @@ class _RecommendedCardState extends State<RecommendedCard> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FoodDetailScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => FoodDetailScreen(
+                        title: item["Title"]!,
+                        image: item["Image"]!,
+                        price: item["Price"]!,
+                      ),
+                    ),
                   );
                 },
                 child: Container(
@@ -110,7 +117,15 @@ class _RecommendedCardState extends State<RecommendedCard> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    CartData.addToCart(
+                      id: item["Title"]!,
+                      title: item["Title"]!,
+                      price: double.parse(item["Price"]!.replaceAll('\$', '')),
+                      imageUrl: item["Image"]!,
+                      option: "Some Details about the product",
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
                     backgroundColor: AppColors.borderSecondary,

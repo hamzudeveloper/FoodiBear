@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
+import 'package:foodi_bear/Core/Constants/app_sizes.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({super.key});
@@ -190,6 +191,32 @@ class _AppSettingsState extends State<AppSettings> {
                 ),
               ],
             ),
+          ),
+
+          AppSizes.h20,
+          Text(
+            "Foodi Bear version 1.0.0",
+            style: TextStyle(color: const Color(0xFF5E4C46), fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Terms of Service",
+                style: TextStyle(color: AppColors.primary),
+              ),
+              SizedBox(width: 10),
+              Text(
+                "Privacy Policy",
+                style: TextStyle(color: AppColors.primary),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Text(
+            "© 2023 Foodi Bear. All rights reserved.",
+            style: TextStyle(color: const Color(0xFF5E4C46), fontSize: 14),
           ),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
+import 'package:foodi_bear/Core/Constants/app_sizes.dart';
 
 class AccountSetting extends StatelessWidget {
   const AccountSetting({super.key});
@@ -64,7 +65,7 @@ class AccountSetting extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(),
+                  AppSizes.h20,
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -81,7 +82,7 @@ class AccountSetting extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            AppSizes.h20,
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -199,7 +200,7 @@ class AccountSetting extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            AppSizes.h20,
             Text(
               "Foodi Bear version 1.0.0",
               style: TextStyle(color: const Color(0xFF5E4C46), fontSize: 16),

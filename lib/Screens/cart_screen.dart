@@ -2,26 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Core/Constants/app_sizes.dart';
 import 'package:foodi_bear/Screens/checkout_screen.dart';
+import 'package:foodi_bear/shared/card_data.dart';
 
 // --- DATA MODEL ---
 // Defines what data structure an individual Cart Item must follow
-class CartItem {
-  final String id;
-  final String title;
-  final String option;
-  final double price;
-  int quantity;
-  final String imageUrl;
-
-  CartItem({
-    required this.id,
-    required this.title,
-    required this.option,
-    required this.price,
-    required this.quantity,
-    required this.imageUrl,
-  });
-}
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -31,55 +15,23 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // --- STATE MANAGEMENT ---
-  // Initializing mock cart data matching the UI mockup
-  final List<CartItem> cartItems = [
-    CartItem(
-      id: '1',
-      title: 'Truffle Cream Pasta',
-      option: 'Extra Parmesan',
-      price: 18.50,
-      quantity: 1,
-      imageUrl:
-          'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=300&auto=format&fit=crop',
-    ),
-    CartItem(
-      id: '2',
-      title: 'Berry Blast Bowl',
-      option: 'Acai Base',
-      price: 12.99,
-      quantity: 1,
-      imageUrl:
-          'https://images.unsplash.com/photo-1590301157890-4810ed352733?q=80&w=300&auto=format&fit=crop',
-    ),
-  ];
-
   final TextEditingController promoController = TextEditingController();
 
-  // --- HANDLER FUNCTIONS ---
-  // Updates item quantity safely and triggers UI re-render
+  List<CartItem> get cartItems => CartData.cartItems;
+  double get subtotal => CartData.subtotal;
+  double get deliveryFee => 0.00;
+
   void _updateQuantity(String id, int change) {
     setState(() {
-      final item = cartItems.firstWhere((element) => element.id == id);
-      final newQty = item.quantity + change;
-      if (newQty > 0) {
-        item.quantity = newQty;
-      }
+      CartData.updateQuantity(id, change);
     });
   }
 
-  // Completely removes an item from the cart list
   void _removeItem(String id) {
     setState(() {
-      cartItems.removeWhere((element) => element.id == id);
+      CartData.removeItem(id);
     });
   }
-
-  // --- CALCULATION LOGIC ---
-  // Dynamic getters that auto-calculate based on state array
-  double get subtotal =>
-      cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
-  double get deliveryFee => 0.00; // Hardcoded FREE delivery per design UI
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +66,7 @@ class _CartScreenState extends State<CartScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-        
+
               // // --- HEADER BAR ---
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
               //   ],
               // ),
               // const SizedBox(height: 24),
-        
+
               // --- TITLE AND COUNTER BADGE ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -188,11 +140,10 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-        
+
               // --- CART ITEMS LIST ---
               ListView.builder(
-                shrinkWrap:
-                    true, // Forces ListView to use only needed height
+                shrinkWrap: true, // Forces ListView to use only needed height
                 physics:
                     const NeverScrollableScrollPhysics(), // Disables inner scrolling conflict
                 itemCount: cartItems.length,
@@ -202,24 +153,19 @@ class _CartScreenState extends State<CartScreen> {
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(
-                        0xFF161F30,
-                      ), // Dark Card Background
+                      color: const Color(0xFF161F30), // Dark Card Background
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.03),
-                      ),
+                      border: Border.all(color: Colors.white.withOpacity(0.03)),
                     ),
                     child: Row(
                       children: [
                         // Product Image Thumbnail
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            item.imageUrl,
-                            width: 80,
+                          child: SizedBox(
                             height: 80,
-                            fit: BoxFit.cover,
+                            width: 80,
+                            child: SizedBox(child: buildImage(item.imageUrl)),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -230,8 +176,7 @@ class _CartScreenState extends State<CartScreen> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Column(
@@ -258,13 +203,17 @@ class _CartScreenState extends State<CartScreen> {
                                       ],
                                     ),
                                   ),
-                                  Text(
-                                    '\$${item.price.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                      color: Color(0xFFFF9F43),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${item.updatedPrice}",
+                                        style: const TextStyle(
+                                          color: Color(0xFFFF9F43),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -281,15 +230,12 @@ class _CartScreenState extends State<CartScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: const Color(0xFF1F2C42),
-                                      borderRadius: BorderRadius.circular(
-                                        20,
-                                      ),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Row(
                                       children: [
                                         IconButton(
-                                          constraints:
-                                              const BoxConstraints(),
+                                          constraints: const BoxConstraints(),
                                           padding: const EdgeInsets.all(4),
                                           icon: const Icon(
                                             Icons.remove,
@@ -300,10 +246,9 @@ class _CartScreenState extends State<CartScreen> {
                                               _updateQuantity(item.id, -1),
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0,
+                                          ),
                                           child: Text(
                                             '${item.quantity}',
                                             style: const TextStyle(
@@ -313,8 +258,7 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                         ),
                                         IconButton(
-                                          constraints:
-                                              const BoxConstraints(),
+                                          constraints: const BoxConstraints(),
                                           padding: const EdgeInsets.all(4),
                                           icon: const Icon(
                                             Icons.add,
@@ -346,7 +290,7 @@ class _CartScreenState extends State<CartScreen> {
                   );
                 },
               ),
-        
+
               // --- DELIVERY SECTION ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -407,10 +351,7 @@ class _CartScreenState extends State<CartScreen> {
                           SizedBox(height: 4),
                           Text(
                             '42 Galactic Avenue, Sector 7, Urbania',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -421,7 +362,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-        
+
               // --- PROMO CODE INPUT BAR ---
               Container(
                 padding: const EdgeInsets.all(6),
@@ -454,9 +395,7 @@ class _CartScreenState extends State<CartScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF2D3748),
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
@@ -477,7 +416,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-        
+
               // --- PRICING BREAKDOWN MATRICES ---
               Padding(
                 padding: const EdgeInsets.only(
@@ -490,10 +429,7 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         const Text(
                           'Subtotal',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                         Text(
                           '\$${subtotal.toStringAsFixed(2)}',
@@ -511,10 +447,7 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         Text(
                           'Delivery Fee',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                         Text(
                           'FREE',
@@ -530,61 +463,50 @@ class _CartScreenState extends State<CartScreen> {
                   ],
                 ),
               ),
-              Positioned(
-                bottom: 80,
-                left: 20,
-                right: 20,
-                child: Container(
-                  height: 56,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF7A00), Color(0xFFFFB800)],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.orange.withValues(alpha: 0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
+              Container(
+                height: 56,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFF7A00), Color(0xFFFFB800)],
                   ),
-        
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CheckoutScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.orange.withValues(alpha: 0.2),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
                     ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Proceed to Checkout',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Icon(
-                          Icons.chevron_right,
+                  ],
+                ),
+
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Proceed to Checkout',
+                        style: TextStyle(
                           color: Colors.white,
-                          size: 20,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(Icons.chevron_right, color: Colors.white, size: 20),
+                    ],
                   ),
                 ),
               ),
@@ -594,6 +516,12 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+}
+
+Widget buildImage(String image) {
+  return image.startsWith('http')
+      ? Image.network(image, fit: BoxFit.cover)
+      : Image.asset(image, fit: BoxFit.cover);
 }
   // Quick Navigation Item Helper Widget
   // Widget _buildNavItem(IconData icon, String label, bool isActive) {

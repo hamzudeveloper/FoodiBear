@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
+import 'package:foodi_bear/services/cart_services.dart';
+import 'package:foodi_bear/shared/card_data.dart';
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen({super.key});
+  final String title;
+  final String image;
+  final String price;
+  const FoodDetailScreen({
+    super.key,
+    required this.title,
+    required this.image,
+    required this.price,
+  });
 
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
@@ -10,6 +20,17 @@ class FoodDetailScreen extends StatefulWidget {
 
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int quantity = 1;
+  bool isFavorite = false;
+  late double unitPrice;
+  late double totalPrice;
+
+  @override
+  void initState() {
+    super.initState();
+    // widget.price looks like "$18.50" -> strip the $ and parse
+    unitPrice = double.parse(widget.price.replaceAll('\$', ''));
+    totalPrice = unitPrice;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +47,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               Stack(
                 children: [
                   Image.asset(
-                    "assets/FoodiBear.png",
+                    widget.image,
                     height: 350,
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
 
                   Positioned(
@@ -56,7 +77,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     child: CircleAvatar(
                       backgroundColor: Colors.black54,
 
-                      child: Icon(Icons.favorite_border, color: Colors.white),
+                      child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isFavorite = !isFavorite;
+                          });
+                        },
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -82,7 +113,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Truffle Cream Pasta",
+                          widget.title.toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 26,
@@ -91,7 +122,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         ),
 
                         Text(
-                          "\$18.50",
+                          "\$${totalPrice.toStringAsFixed(2)}",
                           style: TextStyle(
                             color: Colors.orange,
                             fontSize: 22,
@@ -129,10 +160,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                   if (quantity > 1) {
                                     setState(() {
                                       quantity--;
+                                      totalPrice = unitPrice * quantity;
                                     });
                                   }
                                 },
-
                                 icon: Icon(Icons.remove, color: Colors.white),
                               ),
 
@@ -140,7 +171,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 quantity.toString(),
                                 style: TextStyle(
                                   color: Colors.white,
-
                                   fontSize: 18,
                                 ),
                               ),
@@ -149,9 +179,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 onPressed: () {
                                   setState(() {
                                     quantity++;
+                                    totalPrice = unitPrice * quantity;
                                   });
                                 },
-
                                 icon: Icon(Icons.add, color: Colors.white),
                               ),
                             ],
@@ -171,8 +201,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             ),
 
                             onPressed: () {
+                              CartData.addToCart(
+                                id: "1",
+                                title: widget.title,
+                                price: unitPrice,
+                                imageUrl: widget.image,
+                                option: "Some data according to the product",
+                              );
+
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Added to cart")),
+                                SnackBar(content: Text(" Item added to cart")),
                               );
                             },
 
@@ -195,12 +233,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
                     SizedBox(height: 10),
 
-                    ingredient("Spaghetti"),
-                    ingredient("Truffle Oil"),
-                    ingredient("Heavy Cream"),
-                    ingredient("Parmesan Cheese"),
-                    ingredient("Garlic"),
-                    ingredient("Black Pepper"),
+                    Wrap(
+                      children: [
+                        ingredient("Spaghetti"),
+                        SizedBox(width: 4),
+                        ingredient("Truffle Oil"),
+                        SizedBox(width: 4),
+                        ingredient("Heavy Cream"),
+                        SizedBox(width: 4),
+                        ingredient("Parmesan Cheese"),
+                        SizedBox(width: 4),
+                        ingredient("Garlic"),
+                        SizedBox(width: 4),
+                        ingredient("Black Pepper"),
+                      ],
+                    ),
 
                     SizedBox(height: 25),
 
