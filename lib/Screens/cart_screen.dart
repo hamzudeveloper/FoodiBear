@@ -12,7 +12,6 @@ class CartScreen extends StatefulWidget {
 
   @override
   State<CartScreen> createState() => _CartScreenState();
-
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -21,7 +20,7 @@ class _CartScreenState extends State<CartScreen> {
   List<CartItem> get cartItems => CartData.cartItems;
   double get subtotal => CartData.subtotal;
   double get deliveryFee => 0.00;
- // this is a dummy change 
+  // this is a dummy change
 
   void _updateQuantity(String id, int change) {
     setState(() {
