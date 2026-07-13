@@ -5,11 +5,34 @@ import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Core/Constants/app_sizes.dart';
 
 class HomeBanner extends StatelessWidget {
-  const HomeBanner({super.key});
+  final bool isRunning;
+  const HomeBanner({super.key, required this.isRunning});
 
   @override
   Widget build(BuildContext context) {
     final banners = [
+      {
+        "title": "40 % OFF",
+        "subtitle": "On your First order",
+        "image": "assets/deal.png",
+      },
+      {
+        "title": "40 % OFF",
+        "subtitle": "On your First order",
+        "image": "assets/deal.png",
+      },
+      {
+        "title": "40 % OFF",
+        "subtitle": "On your First order",
+        "image": "assets/burger.png",
+      },
+      {
+        "title": "40 % OFF",
+        "subtitle": "On your First order",
+        "image": "assets/deal1.png",
+      },
+    ];
+    final banners2 = [
       {
         "title": "40 % OFF",
         "subtitle": "On your First order",
@@ -37,7 +60,7 @@ class HomeBanner extends StatelessWidget {
 
       options: CarouselOptions(
         height: 190,
-        autoPlay: true,
+        autoPlay: isRunning,
         enlargeCenterPage: true,
         viewportFraction: 1,
       ),

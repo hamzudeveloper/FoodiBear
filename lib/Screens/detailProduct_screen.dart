@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
+import 'package:foodi_bear/Screens/Wishlist_screen.dart';
 import 'package:foodi_bear/services/cart_services.dart';
 import 'package:foodi_bear/shared/card_data.dart';
 
@@ -79,6 +80,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
                       child: IconButton(
                         onPressed: () {
+                          FavouriteCard.addToCart(
+                            id: "1",
+                            title: widget.title,
+                            price: double.parse(
+                              widget.price.replaceAll('\$', ''),
+                            ),
+                            imageUrl: widget.image,
+                            option: "This is Discription",
+                          );
                           setState(() {
                             isFavorite = !isFavorite;
                           });

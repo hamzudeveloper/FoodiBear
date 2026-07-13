@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Core/Constants/app_sizes.dart';
+import 'package:foodi_bear/Screens/Wishlist_screen.dart';
 import 'package:foodi_bear/Screens/category_screen.dart';
 import 'package:foodi_bear/Screens/notification_screen.dart';
 import 'package:foodi_bear/Screens/popularMenu_screen.dart';
@@ -160,9 +161,17 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(width: 10),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
-                child: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: AppColors.heading,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WishlistScreen()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.shopping_bag_outlined,
+                    color: AppColors.heading,
+                  ),
                 ),
               ),
             ],
@@ -231,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 AppSizes.h24,
 
-                HomeBanner(),
+                HomeBanner(isRunning: true),
 
                 AppSizes.h20,
                 Row(
@@ -692,15 +701,80 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 AppSizes.h16,
+                HomeBanner(isRunning: false),
+                AppSizes.h16,
+                AppSizes.h16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular Near You",
+                      style: TextStyle(color: AppColors.white, fontSize: 24),
+                    ),
 
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: foods.length,
-                  itemBuilder: (context, index) {
-                    return FoodCard(food: foods[index]);
-                  },
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+                    ),
+                  ],
                 ),
+                AppSizes.h16,
+                HomeBanner(isRunning: false),
+                AppSizes.h16,
+                AppSizes.h16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular Near You",
+                      style: TextStyle(color: AppColors.white, fontSize: 24),
+                    ),
+
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+                    ),
+                  ],
+                ),
+                AppSizes.h16,
+                HomeBanner(isRunning: false),
+                AppSizes.h16,
+                AppSizes.h16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular Near You",
+                      style: TextStyle(color: AppColors.white, fontSize: 24),
+                    ),
+
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+                    ),
+                  ],
+                ),
+                AppSizes.h16,
+                HomeBanner(isRunning: false),
+                AppSizes.h16,
+                AppSizes.h16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular Near You",
+                      style: TextStyle(color: AppColors.white, fontSize: 24),
+                    ),
+
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_forward, color: AppColors.primary),
+                    ),
+                  ],
+                ),
+                AppSizes.h16,
+                HomeBanner(isRunning: false),
+                AppSizes.h16,
               ],
             ),
           ),
