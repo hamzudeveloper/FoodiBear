@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Core/Constants/app_sizes.dart';
 import 'package:foodi_bear/Screens/checkout_screen.dart';
+import 'package:foodi_bear/Screens/settings_screen.dart';
 import 'package:foodi_bear/shared/card_data.dart';
 
 // --- DATA MODEL ---
@@ -12,7 +13,6 @@ class CartScreen extends StatefulWidget {
 
   @override
   State<CartScreen> createState() => _CartScreenState();
-
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -21,7 +21,7 @@ class _CartScreenState extends State<CartScreen> {
   List<CartItem> get cartItems => CartData.cartItems;
   double get subtotal => CartData.subtotal;
   double get deliveryFee => 0.00;
- // this is a dummy change 
+  // this is a dummy change
 
   void _updateQuantity(String id, int change) {
     setState(() {
@@ -44,10 +44,16 @@ class _CartScreenState extends State<CartScreen> {
         elevation: 2,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            radius: 20,
-            backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100",
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage("assets/mine.png"),
             ),
           ),
         ),
@@ -485,7 +491,9 @@ class _CartScreenState extends State<CartScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => CheckoutScreen(price: subtotal),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(

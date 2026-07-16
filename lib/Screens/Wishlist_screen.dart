@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodi_bear/Core/Constants/app_colors.dart';
 
 class CartItem {
   final String id;
@@ -61,6 +62,7 @@ class WishlistScreen extends StatelessWidget {
     final items = FavouriteCard.cartItems;
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(title: const Text('Wishlist')),
       body: items.isEmpty
           ? const Center(child: Text('No items in wishlist'))
@@ -76,7 +78,11 @@ Widget FavouriteFoodCard(CartItem item) {
   return Card(
     margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
     child: ListTile(
-      leading: SizedBox(width: 56, height: 56, child: buildImage(item.imageUrl)),
+      leading: SizedBox(
+        width: 56,
+        height: 56,
+        child: buildImage(item.imageUrl),
+      ),
       title: Text(item.title),
       subtitle: Text(item.option),
       trailing: Column(

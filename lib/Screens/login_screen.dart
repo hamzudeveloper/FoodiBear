@@ -5,6 +5,7 @@ import 'package:foodi_bear/Core/Constants/app_sizes.dart';
 import 'package:foodi_bear/Screens/home_screen.dart';
 import 'package:foodi_bear/Screens/register_screen.dart';
 import 'package:foodi_bear/shared/custom_navbar.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -122,12 +123,8 @@ class LoginScreen extends StatelessWidget {
                     backgroundColor: Colors.orangeAccent,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BottomNavbarPage(),
-                      ),
-                    );
+                    Get.to(BottomNavbarPage());
+                    Get.snackbar("Log in" ,"Succes Fully Lgged In ");
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),

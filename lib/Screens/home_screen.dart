@@ -8,8 +8,11 @@ import 'package:foodi_bear/Screens/popularMenu_screen.dart';
 import 'package:foodi_bear/shared/cuisines_cards.dart';
 import 'package:foodi_bear/shared/custom_navbar.dart';
 import 'package:foodi_bear/shared/home_banner.dart';
+import 'package:foodi_bear/shared/popularMenuCard.dart';
 import 'package:foodi_bear/shared/recommended_card.dart';
 import 'package:foodi_bear/shared/search_bar.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -150,12 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.notifications_outlined),
                 color: AppColors.heading,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NotificationScreen(),
-                    ),
-                  );
+                  Get.to(NotificationScreen());
                 },
               ),
               SizedBox(width: 10),
@@ -163,16 +161,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(right: 10.0),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WishlistScreen()),
-                    );
+                    Get.to(WishlistScreen());
                   },
                   icon: Icon(
                     Icons.shopping_bag_outlined,
                     color: AppColors.heading,
                   ),
                 ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Get.snackbar(
+                    "Hamza",
+                    "Hello Hamza",
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                },
+                icon: Icon(Icons.dark_mode),
               ),
             ],
           ),
@@ -275,7 +280,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (context) => CategoryScreen(
                                   burgers: [
                                     {
-                                      "name": "Classic Burger",
+                                      ""
+                                              "name":
+                                          "Classic Burger",
                                       "price": 8.99,
                                       "image":
                                           "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500",
@@ -719,7 +726,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 AppSizes.h16,
-                HomeBanner(isRunning: false),
+
                 AppSizes.h16,
                 AppSizes.h16,
                 Row(
@@ -755,7 +762,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 AppSizes.h16,
-                HomeBanner(isRunning: false),
+                Popularmenucard(),
                 AppSizes.h16,
                 AppSizes.h16,
                 Row(
@@ -775,6 +782,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 AppSizes.h16,
                 HomeBanner(isRunning: false),
                 AppSizes.h16,
+
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => ()),
+                    // );
+                  },
+                  child: Icon(Icons.arrow_forward_ios),
+                ),
               ],
             ),
           ),

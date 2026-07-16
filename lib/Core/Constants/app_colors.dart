@@ -29,4 +29,12 @@ class AppColors {
   // Gradient Colors
   static const Color gradientStart = Color(0xFFFF6B35);
   static const Color gradientEnd = Color(0xFFFFB703);
+
+  static const profileBackground = Color(0xFF12121C);
+  static const cardBackground = Color(0xFF1D1E2C);
+  static const orange = Color(0xFFFF7A45);
+  static const orangeLight = Color(0xFFFFA53D);
+  static const textPrimary = Colors.white;
+  static const textSecondary = Color(0xFF8A8B9A);
+  static const iconMuted = Color(0xFF6E6F80);
 }

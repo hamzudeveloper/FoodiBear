@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+  final price;
+  const CheckoutScreen({super.key, required this.price});
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -11,9 +12,21 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   int _selectedPaymentIndex = 1;
   bool isSelected = false;
+  double deliveryCharges = 2.00;
+
+  double get itemPrice {
+    if (widget.price is String) {
+      return double.tryParse(
+            (widget.price as String).replaceAll(RegExp(r'[^\d.]'), ''),
+          ) ??
+          0.0;
+    }
+    return widget.price as double;
+  }
 
   @override
   Widget build(BuildContext context) {
+    double totalAmount = itemPrice + deliveryCharges;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -45,11 +58,108 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               "Payment Methods",
               style: TextStyle(fontSize: 30, color: AppColors.grey),
             ),
+            SizedBox(height: 20),
             buildPaymentTile('Credit Card', Icons.credit_card, 0),
             SizedBox(height: 16),
             buildPaymentTile('PayPal', Icons.account_balance_wallet, 1),
             SizedBox(height: 16),
             buildPaymentTile('Apple Pay', Icons.phone_iphone, 2),
+            SizedBox(height: 16),
+            buildPaymentTile('Bank Payment', Icons.wallet_rounded, 3),
+            SizedBox(height: 16),
+            buildPaymentTile('Andriod Pay', Icons.android_outlined, 4),
+
+            SizedBox(height: 30),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              color: AppColors.card,
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Item Total",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: AppColors.heading,
+                          ),
+                        ),
+
+                        Text(
+                          "\$${itemPrice.toStringAsFixed(2)}",
+                          style: TextStyle(color: AppColors.grey),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Delivery Fee",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: AppColors.heading,
+                          ),
+                        ),
+
+                        Text(
+                          "\$${deliveryCharges.toStringAsFixed(2)}",
+                          style: TextStyle(color: AppColors.grey),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Divider(color: AppColors.grey, thickness: 0.2),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "Total Amount",
+                              style: TextStyle(
+                                color: AppColors.heading,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              "\$${totalAmount.toStringAsFixed(2)}",
+                              style: TextStyle(
+                                color: AppColors.heading,
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Card(
+                          elevation: 8,
+                          shadowColor: AppColors.borderPrimary.withValues(
+                            alpha: .8,
+                          ),
+                          color: AppColors.heading,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(25, 16, 25, 16),
+                            child: Text(
+                              "Pay Now",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

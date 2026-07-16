@@ -13,16 +13,19 @@ class RecommendedCard extends StatefulWidget {
 class _RecommendedCardState extends State<RecommendedCard> {
   static final food = [
     {
+      "id": "1",
       "Title": "Truffle Cream Pasta",
       "Price": "\$18.50",
       "Image": "assets/pizza.png",
     },
     {
+      "id": "2",
       "Title": "Berry Blast Bowl",
       "Price": "\$12.99",
       "Image": "assets/deal1.png",
     },
     {
+      "id": "3",
       "Title": "Spicy Tuna Poke",
       "Price": "\$16.20",
       "Image": "assets/burger.png",
@@ -72,6 +75,7 @@ class _RecommendedCardState extends State<RecommendedCard> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FoodDetailScreen(
+                        id: item["id"]!,
                         title: item["Title"]!,
                         image: item["Image"]!,
                         price: item["Price"]!,

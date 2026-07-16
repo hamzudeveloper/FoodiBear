@@ -5,11 +5,13 @@ import 'package:foodi_bear/services/cart_services.dart';
 import 'package:foodi_bear/shared/card_data.dart';
 
 class FoodDetailScreen extends StatefulWidget {
+  final String id;
   final String title;
   final String image;
   final String price;
   const FoodDetailScreen({
     super.key,
+    required this.id,
     required this.title,
     required this.image,
     required this.price,
@@ -81,7 +83,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       child: IconButton(
                         onPressed: () {
                           FavouriteCard.addToCart(
-                            id: "1",
+                            id: widget.id,
                             title: widget.title,
                             price: double.parse(
                               widget.price.replaceAll('\$', ''),
@@ -93,7 +95,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             isFavorite = !isFavorite;
                           });
                         },
-                        icon: Icon(
+                        icon:
+                         Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
                           color: isFavorite ? Colors.red : Colors.white,
                         ),
@@ -212,7 +215,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
                             onPressed: () {
                               CartData.addToCart(
-                                id: "1",
+                                id: widget.id,
                                 title: widget.title,
                                 price: unitPrice,
                                 imageUrl: widget.image,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodi_bear/Core/Constants/app_colors.dart';
 import 'package:foodi_bear/Core/Constants/app_sizes.dart';
+import 'package:foodi_bear/Screens/editProfile_screen.dart' hide AppColors;
 
 class AccountSetting extends StatelessWidget {
   const AccountSetting({super.key});
@@ -8,7 +9,7 @@ class AccountSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.profileBackground,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -16,23 +17,35 @@ class AccountSetting extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.card,
+                color: AppColors.cardBackground,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/736x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg',
+                  Container(
+                    width: 70,
+                    height: 70,
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: const LinearGradient(
+                        colors: [AppColors.orange, AppColors.orangeLight],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.borderPrimary,
-                          width: 2,
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/mine.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          color: AppColors.cardBackground,
+                          child: const Icon(
+                            Icons.person,
+                            size: 48,
+                            color: AppColors.iconMuted,
+                          ),
                         ),
                       ),
                     ),
@@ -67,7 +80,14 @@ class AccountSetting extends StatelessWidget {
                   ),
                   AppSizes.h20,
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileScreen(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.borderPrimary,
                       shape: RoundedRectangleBorder(
@@ -84,9 +104,9 @@ class AccountSetting extends StatelessWidget {
             ),
             AppSizes.h20,
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.card,
+                color: AppColors.cardBackground,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
